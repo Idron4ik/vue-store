@@ -1,10 +1,11 @@
 <template>
 	<div>
-		<h1>{{products[id].title}}</h1>
 		<hr>
-		<div class="alert alert-success">
-		</div>
-		<div>{{products[id].price}}</div>
+		<div class="alert alert-success"></div>
+		<h2>{{products[id].title}}</h2>
+		<strong>{{products[id].price}}</strong>
+		<br>
+		<br>
 		<btn-group
 			:product="products[id]"
 		></btn-group>
@@ -24,17 +25,8 @@
 				'products',
 			]),
 			id(){
-				for(let i=0; i<this.products.length; i++){
-					if(this.products[i].id_product == +this.$route.params.id){
-						return i;
-					}
-				}
+				return this.$route.params.id;
 			},
-			containsCart(){
-				return this.products.filter(elem =>{
-					return this.cartProducts.indexOf(elem.id_product) != -1
-				});
-			}
 		},
 		methods:{
 			...mapMutations([

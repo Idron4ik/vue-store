@@ -46,9 +46,13 @@
 				return this.lengthCart == 0;
 			},
 			containsCart(){
-				return this.products.filter(elem =>{
-					return this.cartProducts.indexOf(elem.id_product) != -1
-				});
+				var productsInCart = [];
+
+				for(let i=0; i<this.cartProducts.length; i++){
+					let item = this.cartProducts[i];
+					productsInCart.push(this.products[item]);
+				}
+				return productsInCart;
 			}
 		},
 		methods:{
@@ -56,6 +60,5 @@
 				this.$router.push('/checkout');
 			}
 		}
-
 	}
 </script>

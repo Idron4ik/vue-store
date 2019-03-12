@@ -10,7 +10,7 @@
 					tag="h3"
 				>
 				{{product.title}}
-				</router-link>
+				</router-link> 
 				
 				<div class="price">{{product.price}}</div>
 				<br>
@@ -34,7 +34,7 @@
 		computed:{
 			...mapGetters([
 				'products'
-			]),
+			])
 		},
 	}
 </script>

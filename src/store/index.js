@@ -3,10 +3,17 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+var data = getProducts();
+let normalizeArr = {};
+for(let i=0;i<data.length;i++){
+    let item = data[i];
+    normalizeArr[item.id_product] = item; 
+}
+
 export const store = new Vuex.Store({
     state: {
-        products: getProducts(),
-        cartProducts: [],
+        products: normalizeArr,
+        cartProducts: [10,20],
         routerItems:[
             {
                 link:'/products',
@@ -57,11 +64,8 @@ export const store = new Vuex.Store({
         totalOrder(state){
             let sum = 0;
             for(let i=0; i<state.cartProducts.length; i++){
-                for(let j=0; j<state.products.length; j++){
-                    if(state.cartProducts[i] == state.products[j].id_product){
-                        sum += state.products[j].price;
-                    }
-                }
+                let item = state.cartProducts[i];
+                sum += state.products[item].price;
             }
             
             return sum;
@@ -91,7 +95,8 @@ export const store = new Vuex.Store({
 
         },
         updateValue(state, payload){
-            state.info[payload.i].value = payload.data.value;
+            console.log(1234223);
+            return state.info[payload.i].value = payload.data.value;
         },
         formSubmit(state){
             return state.formSubmit = false;

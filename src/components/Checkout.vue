@@ -8,12 +8,12 @@
         <div class="progress">
           <div class="progress-bar" :style="widthStatusBar"></div>
         </div>
-        <app-field
+        <app-input
           v-for="(item,i) in info"
           :key="i"
           :index="i"
           @emit-pattern="onEmitPattern(i, $event)"
-        ></app-field>
+        ></app-input>
 
         <div class="minicart" v-if="btnDisable">
           <h3>Your order:</h3>
@@ -59,11 +59,11 @@
 
 <script>
 import { mapMutations, mapGetters } from "vuex";
-import AppField from "./AppField";
+import AppInput from "./AppInput";
 
 export default {
   components: {
-    AppField
+    AppInput
   },
   data() {
     return {
@@ -83,18 +83,23 @@ export default {
       "formSubmit",
       "products",
       "cartProducts",
-	  "totalOrder",
-	  "loadingForm"
+      "totalOrder",
+      "loadingForm"
     ]),
     containsCart() {
-      return this.products.filter(elem => {
-        return this.cartProducts.indexOf(elem.id_product) != -1;
-      });
+      var productsInCart = [];
+
+      for (let i = 0; i < this.cartProducts.length; i++) {
+        let item = this.cartProducts[i];
+        productsInCart.push(this.products[item]);
+      }
+      return productsInCart;
     }
   },
   methods: {
     ...mapMutations(["updateValue"]),
     onEmitPattern(i, data) {
+      console.log(111);
       this.$store.commit("updateValue", { i, data });
       this.$set(this.statusBar, i, data.valid);
 
@@ -137,11 +142,11 @@ export default {
   margin: 0 auto;
   padding-right: 40px;
 }
-.checkout #loader-wrapper{
-	display: none;
+.checkout #loader-wrapper {
+  display: none;
 }
-.checkout.loading #loader-wrapper{
-	display: block;
+.checkout.loading #loader-wrapper {
+  display: block;
 }
 .btn-checkout {
   float: right;
